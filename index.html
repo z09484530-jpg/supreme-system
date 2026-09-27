@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Love You Rayana ❤️</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;500&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0b0610;
+      color: #fff;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    #scene {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      background: radial-gradient(ellipse at 25% 35%, #1a0f18 0%, #0d0812 45%, #050308 100%);
+      transition: background 1.2s ease;
+      overflow: hidden;
+    }
+
+    #scene.is-on {
+      background: radial-gradient(ellipse at 28% 40%, #3a2018 0%, #2a1520 35%, #120a12 70%, #08050a 100%);
+    }
+
+    /* Soft ambient glow when on */
+    #scene.is-on::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 28% 42%, rgba(255, 140, 80, 0.18) 0%, transparent 50%);
+      pointer-events: none;
+      animation: ambientPulse 4s ease-in-out infinite;
+    }
+
+    @keyframes ambientPulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    /* Brand */
+    .brand {
+      position: absolute;
+      top: 22px;
+      left: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.45);
+      z-index: 40;
+      letter-spacing: 0.04em;
+    }
+
+    .brand-dot {
+      width: 26px;
+      height: 26px;
+      background: linear-gradient(135deg, #ff6b8a, #ff9eb5);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      box-shadow: 0 0 12px rgba(255, 107, 138, 0.4);
+    }
+
+    /* ===== LAMP ===== */
+    .lamp-area {
+      position: absolute;
+      left: 10%;
+      top: 14%;
+      z-index: 20;
+    }
+
+    .lamp {
+      position: relative;
+      width: 110px;
+      height: 170px;
+    }
+
+    .ceiling-cord {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 50px;
+      background: linear-gradient(180deg, #333, #555);
+    }
+
+    .lamp-cap {
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 36px;
+      height: 14px;
+      background: linear-gradient(180deg, #2a2a35, #1a1a22);
+      border-radius: 6px 6px 2px 2px;
+      z-index: 2;
+    }
+
+    .lamp-shade {
+      width: 110px;
+      height: 85px;
+      background: linear-gradient(180deg, #252530 0%, #18181f 100%);
+      border-radius: 55px 55px 28px 28px;
+      position: relative;
+      box-shadow: inset 0 -12px 24px rgba(0,0,0,0.5);
+      transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    #scene.is-on .lamp-shade {
+      background: linear-gradient(180deg, #ffe0a8 0%, #f0b860 45%, #d49240 100%);
+      box-shadow:
+        0 0 50px 20px rgba(255, 170, 70, 0.55),
+        0 0 100px 40px rgba(255, 140, 50, 0.28),
+        0 0 160px 60px rgba(255, 120, 40, 0.12),
+        inset 0 -10px 20px rgba(255, 210, 120, 0.35);
+    }
+
+    .lamp-shade::after {
+      content: '';
+      position: absolute;
+      inset: 8px 12px 12px;
+      border-radius: 40px 40px 18px 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.8s;
+    }
+
+    #scene.is-on .lamp-shade::after {
+      opacity: 1;
+    }
+
+    .lamp-stem {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 60px;
+      background: linear-gradient(180deg, #2a2a35, #16161c);
+      border-radius: 0 0 8px 8px;
+    }
+
+    /* Pull switch */
+    .pull-wrap {
+      position: absolute;
+      left: 68px;
+      top: 70px;
+      cursor: pointer;
+      z-index: 30;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .pull-cord {
+      width: 2.5px;
+      height: 78px;
+      background: linear-gradient(180deg, #777, #555);
+      margin: 0 auto;
+      border-radius: 2px;
+      transition: height 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .pull-wrap.pulling .pull-cord {
+      height: 110px;
+    }
+
+    .pull-knob {
+      width: 22px;
+      height: 22px;
+      background: radial-gradient(circle at 35% 30%, #aaa, #666 60%, #444);
+      border-radius: 50%;
+      margin: 0 auto;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.25);
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .pull-wrap.pulling .pull-knob {
+      transform: translateY(32px);
+    }
+
+    .pull-hint {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 115px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+      transition: opacity 0.5s;
+    }
+
+    #scene.is-on .pull-hint {
+      opacity: 0;
+    }
+
+    /* ===== CENTER LOVE MESSAGE ===== */
+    .love-stage {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: none;
+      padding: 0 20px;
+    }
+
+    /* Dark state hint */
+    .dark-hint {
+      text-align: center;
+      opacity: 1;
+      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(0);
+    }
+
+    #scene.is-on .dark-hint {
+      opacity: 0;
+      transform: translateY(-20px);
+      pointer-events: none;
+    }
+
+    .dark-hint p {
+      font-size: clamp(1.1rem, 2.8vw, 1.55rem);
+      color: rgba(255, 220, 230, 0.55);
+      line-height: 1.7;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
+
+    .dark-hint .accent {
+      color: rgba(255, 160, 180, 0.75);
+      font-weight: 400;
+    }
+
+    /* Love content (visible when on) */
+    .love-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.92);
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      width: 90%;
+      max-width: 720px;
+    }
+
+    #scene.is-on .love-content {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Decorative lines */
+    .deco-lines {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 18px;
+      opacity: 0.85;
+    }
+
+    .deco-line {
+      width: 3px;
+      height: 55px;
+      background: linear-gradient(180deg, transparent 0%, #f0b860 25%, #ff9eb5 75%, transparent 100%);
+      border-radius: 2px;
+    }
+
+    .deco-heart-small {
+      color: #ff6b8a;
+      font-size: 1.4rem;
+      animation: softBeat 1.6s ease-in-out infinite;
+    }
+
+    @keyframes softBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.18); }
+    }
+
+    /* Main love text */
+    .main-love {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 5.2rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      line-height: 1.15;
+      color: #f5d08a;
+      text-shadow:
+        0 0 30px rgba(255, 180, 90, 0.45),
+        0 0 60px rgba(255, 140, 60, 0.2);
+      margin-bottom: 6px;
+      transition: opacity 0.45s ease;
+    }
+
+    .main-love .heart-icon {
+      color: #ff6b8a;
+      display: inline-block;
+      animation: softBeat 1.4s ease-in-out infinite;
+      margin: 0 0.12em;
+    }
+
+    .main-love .name {
+      font-family: 'Great Vibes', cursive;
+      font-size: 1.25em;
+      font-weight: 400;
+      color: #ff9eb5;
+      letter-spacing: 0.04em;
+      text-shadow:
+        0 0 25px rgba(255, 130, 160, 0.5),
+        0 0 50px rgba(255, 100, 140, 0.25);
+      display: inline-block;
+    }
+
+    /* Subtitle */
+    .love-sub {
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(0.95rem, 2.2vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(255, 210, 220, 0.65);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-top: 14px;
+      opacity: 0.9;
+      transition: opacity 0.45s ease;
+    }
+
+    /* Floating hearts & particles */
+    .fx-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 5;
+    }
+
+    .float-heart {
+      position: absolute;
+      color: #ff6b8a;
+      font-size: 14px;
+      opacity: 0;
+      animation: riseHeart 5s ease-in infinite;
+    }
+
+    .spark {
+      position: absolute;
+      width: 5px;
+      height: 5px;
+      background: #ffc070;
+      border-radius: 50%;
+      opacity: 0;
+      box-shadow: 0 0 8px #ffb050;
+      animation: riseSpark 4.5s ease-in infinite;
+    }
+
+    @keyframes riseHeart {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.4) rotate(0deg);
+      }
+      15% {
+        opacity: 0.75;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-160px) scale(1.1) rotate(25deg);
+      }
+    }
+
+    @keyframes riseSpark {
+      0% {
+        opacity: 0;
+        transform: translateY(0) scale(0.3);
+      }
+      20% {
+        opacity: 0.9;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-140px) scale(1.3);
+      }
+    }
+
+    /* Bottom label */
+    .bottom-label {
+      position: absolute;
+      bottom: 26px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      color: rgba(255,255,255,0.25);
+      text-transform: uppercase;
+      z-index: 40;
+      transition: color 0.6s;
+    }
+
+    #scene.is-on .bottom-label {
+      color: rgba(255, 180, 140, 0.45);
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .lamp-area {
+        left: 5%;
+        top: 8%;
+        transform: scale(0.78);
+        transform-origin: top left;
+      }
+      .main-love {
+        font-size: clamp(2.2rem, 9vw, 3.4rem);
+      }
+      .deco-line {
+        height: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="scene">
+    <div class="brand">
+      <div class="brand-dot">K</div>
+      <span>KHIZI DEV</span>
+    </div>
+
+    <!-- Lamp -->
+    <div class="lamp-area">
+      <div class="lamp">
+        <div class="ceiling-cord"></div>
+        <div class="lamp-cap"></div>
+        <div class="lamp-shade"></div>
+        <div class="lamp-stem"></div>
+      </div>
+
+      <div class="pull-wrap" id="pullSwitch" role="button" aria-pressed="false" tabindex="0">
+        <div class="pull-cord"></div>
+        <div class="pull-knob"></div>
+        <div class="pull-hint" id="pullHint">Pull the cord</div>
+      </div>
+    </div>
+
+    <!-- Center stage -->
+    <div class="love-stage">
+      <!-- Dark state -->
+      <div class="dark-hint">
+        <p>It's a little dark in here…</p>
+        <p class="accent">Pull the cord to say it.</p>
+      </div>
+
+      <!-- Love state -->
+      <div class="love-content" id="loveContent">
+        <div class="deco-lines">
+          <div class="deco-line"></div>
+          <span class="deco-heart-small">♥</span>
+          <div class="deco-line"></div>
+        </div>
+
+        <div class="main-love" id="mainLove">
+          I <span class="heart-icon">♥</span> YOU
+        </div>
+
+        <div class="love-sub" id="loveSub">for Rayana</div>
+      </div>
+    </div>
+
+    <!-- Effects -->
+    <div class="fx-layer" id="fxLayer"></div>
+
+    <div class="bottom-label">FOLLOW FOR MORE</div>
+  </div>
+
+  <script>
+    const scene = document.getElementById('scene');
+    const pullSwitch = document.getElementById('pullSwitch');
+    const pullHint = document.getElementById('pullHint');
+    const mainLove = document.getElementById('mainLove');
+    const loveSub = document.getElementById('loveSub');
+    const fxLayer = document.getElementById('fxLayer');
+
+    let isOn = false;
+    let animating = false;
+    let cycleTimer = null;
+
+    // Romantic message cycle (all centered & big)
+    const messages = [
+      {
+        main: 'I <span class="heart-icon">♥</span> YOU',
+        sub: 'for Rayana'
+      },
+      {
+        main: 'I LOVE YOU',
+        sub: 'Rayana'
+      },
+      {
+        main: 'I <span class="heart-icon">♥</span> <span class="name">Rayana</span>',
+        sub: 'always & forever'
+      },
+      {
+        main: '<span class="name">Rayana</span>',
+        sub: 'you light up my world'
+      },
+      {
+        main: 'I LOVE YOU <span class="name">Rayana</span>',
+        sub: 'with all my heart'
+      },
+      {
+        main: '<span class="heart-icon">♥</span>',
+        sub: 'only for you'
+      }
+    ];
+
+    let msgIndex = 0;
+
+    function createEffects() {
+      fxLayer.innerHTML = '';
+
+      // Floating hearts
+      for (let i = 0; i < 12; i++) {
+        const h = document.createElement('div');
+        h.className = 'float-heart';
+        h.textContent = '♥';
+        h.style.left = (15 + Math.random() * 70) + '%';
+        h.style.top = (35 + Math.random() * 40) + '%';
+        h.style.fontSize = (12 + Math.random() * 14) + 'px';
+        h.style.animationDelay = (Math.random() * 4) + 's';
+        h.style.animationDuration = (4 + Math.random() * 3) + 's';
+        h.style.color = Math.random() > 0.5 ? '#ff6b8a' : '#ff9eb5';
+        fxLayer.appendChild(h);
+      }
+
+      // Sparks
+      for (let i = 0; i < 16; i++) {
+        const s = document.createElement('div');
+        s.className = 'spark';
+        s.style.left = (18 + Math.random() * 64) + '%';
+        s.style.top = (30 + Math.random() * 45) + '%';
+        s.style.animationDelay = (Math.random() * 3.5) + 's';
+        s.style.animationDuration = (3.5 + Math.random() * 2.5) + 's';
+        fxLayer.appendChild(s);
+      }
+    }
+
+    function showMessage(index) {
+      const m = messages[index];
+      mainLove.style.opacity = '0';
+      loveSub.style.opacity = '0';
+
+      setTimeout(() => {
+        mainLove.innerHTML = m.main;
+        loveSub.textContent = m.sub;
+        mainLove.style.opacity = '1';
+        loveSub.style.opacity = '1';
+      }, 380);
+    }
+
+    function startLove() {
+      createEffects();
+      msgIndex = 0;
+      showMessage(0);
+      cycleTimer = setInterval(() => {
+        msgIndex = (msgIndex + 1) % messages.length;
+        showMessage(msgIndex);
+      }, 2800);
+    }
+
+    function stopLove() {
+      clearInterval(cycleTimer);
+      cycleTimer = null;
+      fxLayer.innerHTML = '';
+    }
+
+    function toggle() {
+      if (animating) return;
+      animating = true;
+
+      pullSwitch.classList.add('pulling');
+      isOn = !isOn;
+      pullSwitch.setAttribute('aria-pressed', String(isOn));
+      pullHint.textContent = isOn ? 'Pull again to switch off' : 'Pull the cord';
+
+      setTimeout(() => {
+        scene.classList.toggle('is-on', isOn);
+        if (isOn) startLove();
+        else stopLove();
+      }, 200);
+
+      setTimeout(() => {
+        pullSwitch.classList.remove('pulling');
+        animating = false;
+      }, 500);
+    }
+
+    pullSwitch.addEventListener('click', toggle);
+    pullSwitch.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  </script>
+</body>
+</html>
